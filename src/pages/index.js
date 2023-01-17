@@ -2,6 +2,7 @@ import Head from 'next/head'
 import TicketForm from '../components/TicketForm'
 import { createTheme, ThemeProvider } from '@mui/material'
 import Image from 'next/image';
+import Link from 'next/link';
 
 // Roboto Font
 import '@fontsource/roboto/300.css'
@@ -55,9 +56,9 @@ export default function Home() {
               <TicketForm />
             </div>
               <div className="w-full flex justify-center items-center mt-2">
-                <a className="text-xs text-gray-800" href="#">
+                <Link className="text-xs text-gray-800" href="/dashboard">
                   Admin Login
-                </a>
+                </Link>
               </div>
           </div>
         </main>
