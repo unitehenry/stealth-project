@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import TicketForm from '../components/TicketForm'
-import { ThemeProvider } from '@mui/material'
+import { ThemeProvider, Box, Typography } from '@mui/material'
 import theme from '../theme';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -23,28 +23,28 @@ export default function Home() {
       </Head>
       <ThemeProvider theme={theme}>
         <main>
-          <div className="
+          <Box className="
             h-screen w-full flex flex-col
             justify-center items-center py-8 px-4 md:px-0">
-            <div className="
+            <Box className="
               w-full py-4 bg-[#406278]
               rounded px-4 rojunded shadow-lg md:max-w-lg">
-              <div className="w-full flex justify-center mb-4">
-                <div className="bg-white rounded-full p-4 shadow-lg">
+              <Box className="w-full flex justify-center mb-4">
+                <Box className="bg-white rounded-full p-4 shadow-lg">
                   <Image src="/stealth.png" width={100} height={100} />
-                </div>
-              </div>
-              <h1 className="text-center text-xl my-4">
+                </Box>
+              </Box>
+              <Typography variant="h1" className="text-center text-xl my-4">
                 Submit a Ticket
-              </h1>
+              </Typography>
               <TicketForm />
-            </div>
-              <div className="w-full flex justify-center items-center mt-2">
+            </Box>
+              <Box className="w-full flex justify-center items-center mt-2">
                 <Link className="text-xs text-gray-800" href="/dashboard">
                   Admin Login
                 </Link>
-              </div>
-          </div>
+              </Box>
+          </Box>
         </main>
       </ThemeProvider>
     </>
