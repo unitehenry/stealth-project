@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import {
+  Dialog,
   Box,
   Paper,
   Button,
@@ -64,7 +65,7 @@ export default function TicketsTable() {
         </Table>
       </TableContainer>
       <Drawer anchor="right" open={true}>
-        <Box className="h-full bg-[#2F4858] w-[35vw] p-4">
+        <Box className="h-full bg-[#2F4858] w-full md:w-[35vw] p-4">
           <Typography variant="h1" className="text-xl">
             Case #10429238
           </Typography>
@@ -124,6 +125,25 @@ export default function TicketsTable() {
           </Box>
         </Box>
       </Drawer>
+      <Dialog open={true}>
+        <Box as="form" className="bg-[#406278] md:w-[600px] p-4">
+          <Typography variant="h2" className="text-white text-xl mb-2">
+            Respond to Ticket
+          </Typography>
+          <TextField
+            label="Message"
+            className="w-full mb-2"
+            multiline
+            rows={4}
+            required />
+          <Button variant="contained" className="w-full bg-white mb-2">
+            Save
+          </Button>
+          <Button className="w-full mb-2">
+            Close
+          </Button>
+        </Box>
+      </Dialog>
     </>
   )
 }
