@@ -1,4 +1,7 @@
-import { createTicket } from '../../data/tickets';
+import {
+  getTickets,
+  createTicket
+} from '../../data/tickets';
 
 export default async function handler(req, res) {
   switch(req.method) {
@@ -14,7 +17,7 @@ export default async function handler(req, res) {
     }
     case 'GET':
     default: {
-      res.status(200).json({ name: 'John Doe' });
+      res.status(200).json(await getTickets());
     }
   }
 }

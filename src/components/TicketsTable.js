@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react';
+import axios from 'axios'
+import moment from 'moment'
+import { useState, useEffect } from 'react'
 import {
   Dialog,
   Box,
@@ -21,14 +23,14 @@ import {
 
 export default function TicketsTable() {
 
-  const [ tickets, setTickets ] = useState([
-    {
-      id: 'abc',
-      name: 'Wonder Burger',
-      email: 'henry@getzealthy.com',
-      status: 'new'
-    }
-  ]);
+  const [ tickets, setTickets ] = useState([]);
+
+  useEffect(() => {
+    axios({
+      method: 'GET',
+      url: '/api/tickets',
+    }).then(res => setTickets(res.data))
+  }, []);
 
   const [ currentTicket, setCurrentTicket ] = useState(null);
 
@@ -42,6 +44,7 @@ export default function TicketsTable() {
             <TableRow>
               <TableCell>Ticket</TableCell>
               <TableCell>Email</TableCell>
+              <TableCell>Submitted</TableCell>
               <TableCell>Status</TableCell>
             </TableRow>
           </TableHead>
@@ -53,13 +56,16 @@ export default function TicketsTable() {
                   className="cursor-pointer hover:bg-[#2F4858]"
                   key={tr.id}>
                     <TableCell>
+                      { tr.number }
+                    </TableCell>
+                    <TableCell>
                       { tr.name }
                     </TableCell>
                     <TableCell>
-                      { tr.email }
+                      { moment.utc(tr.created).format('MM/DD/yyyy') }
                     </TableCell>
                     <TableCell>
-                      { tr.status }
+                      { tr.status.toUpperCase() }
                     </TableCell>
                 </TableRow>
               )
@@ -67,21 +73,21 @@ export default function TicketsTable() {
           </TableBody>
         </Table>
       </TableContainer>
-      <Drawer anchor="right" open={currentTicket}>
+      <Drawer anchor="right" open={currentTicket || false}>
         <Box className="h-full bg-[#2F4858] w-full md:w-[35vw] p-4">
           <Typography variant="h1" className="text-xl">
-            Case #10429238
+            Case #{currentTicket?.number}
           </Typography>
           <br />
           <Box>
             <TextField
               label="Name"
               className="w-full mb-4"
-              value="Wonder Burger" />
+              value={currentTicket?.name} />
             <TextField
               label="Email"
               className="w-full mb-4"
-              value="henry@getzeathy.com" />
+              value={currentTicket?.email} />
             <FormControl className="w-full">
               <InputLabel id="status-label">
                 Status
@@ -89,7 +95,14 @@ export default function TicketsTable() {
               <Select
                 className="w-full mb-4"
                 label="Status"
-                labelId="status-label">
+                labelId="status-label"
+                onChange={evt => {
+                  setCurrentTicket({
+                    ...currentTicket,
+                    status: evt.target.value,
+                  })
+                }}
+                value={currentTicket?.status}>
                 <MenuItem
                   className="text-gray-800"
                   value="new">
@@ -125,7 +138,7 @@ export default function TicketsTable() {
                 Respond to Ticket
               </Button>
               <Button variant="contained" className="w-full bg-white mb-2">
-                Save
+                Update Status
               </Button>
               <Button 
                 onClick={() => setCurrentTicket(null)}
@@ -136,7 +149,7 @@ export default function TicketsTable() {
           </Box>
         </Box>
       </Drawer>
-      <Dialog open={currentTicket?.openResponse}>
+      <Dialog open={currentTicket?.openResponse || false}>
         <Box as="form" className="bg-[#406278] md:w-[600px] p-4">
           <Typography variant="h2" className="text-white text-xl mb-2">
             Respond to Ticket
