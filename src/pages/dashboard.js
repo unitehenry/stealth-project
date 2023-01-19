@@ -1,17 +1,30 @@
+import { useEffect } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import {
   Box,
   Typography,
   Button,
   Toolbar
 } from '@mui/material'
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 import Page from '../components/Page'
 import Navbar from '../components/Navbar'
 import TicketsTable from '../components/TicketsTable'
 
 export default function Dashboard() {
+
+  const router = useRouter();
+  const { user, isLoading } = useUser();
+
+  useEffect(() => {
+    if (!isLoading && !user) {
+      router.push('/');
+    }
+  }, [ isLoading ]);
+
   return (
     <>
       <Head>
