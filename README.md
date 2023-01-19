@@ -4,6 +4,10 @@
 The coding exercise is to create a basic “help desk” / support system ticket management system.
 ```
 
+## Screenshots
+
+!["form"](/.images/form.png)
+
 ## Getting Started
 
 **Install Dependencies:**
