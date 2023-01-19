@@ -67,6 +67,28 @@ export default function TicketsTable() {
     );
   }
 
+  const [ message, setMessage ] = useState('');
+
+  const sendMessage = evt => {
+    evt.preventDefault();
+    console.log(
+      '%cPOST /api/tickets/${currentTicket.id}/message',
+      `
+        background: white;
+        font-weight: 700;
+        color: black;
+        padding: 0 5px;
+        font-size: 1rem;
+      `
+    );
+    console.log(
+      '%cWould normally send email here with body:',
+      'font-weight: 700; color: white;'
+    );
+    console.log(message);
+    setMessage('');
+  }
+
   return (
     <>
       <TableContainer
@@ -189,27 +211,38 @@ export default function TicketsTable() {
         </Box>
       </Drawer>
       <Dialog open={currentTicket?.openResponse || false}>
-        <Box as="form" className="bg-[#406278] md:w-[600px] p-4">
-          <Typography variant="h2" className="text-white text-xl mb-2">
-            Respond to Ticket
-          </Typography>
-          <TextField
-            label="Message"
-            className="w-full mb-2"
-            multiline
-            rows={4}
-            required />
-          <Button variant="contained" className="w-full bg-white mb-2">
-            Send Message
-          </Button>
-          <Button
-            onClick={() => setCurrentTicket({
-              ...currentTicket,
-              openResponse: false,
-            })}
-            className="w-full mb-2">
-              Close
-          </Button>
+        <Box
+          as="form" 
+          onSubmit={sendMessage}
+          className="bg-[#406278] md:w-[600px] p-4">
+            <Typography variant="h2" className="text-white text-xl mb-2">
+              Respond to Ticket
+            </Typography>
+            <TextField
+              label="Message"
+              className="w-full mb-2"
+              multiline
+              rows={4}
+              value={message}
+              onChange={evt => setMessage(evt.target.value)}
+              required />
+            <Button
+              variant="contained"
+              className="w-full bg-white mb-2"
+              type="submit">
+                Send Message
+            </Button>
+            <Button
+              onClick={() => {
+                setCurrentTicket({
+                  ...currentTicket,
+                  openResponse: false,
+                });
+                setMessage('');
+              }}
+              className="w-full mb-2">
+                Close
+            </Button>
         </Box>
       </Dialog>
       <Snackbar
