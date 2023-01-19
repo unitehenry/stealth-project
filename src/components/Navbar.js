@@ -13,7 +13,7 @@ export default function Navbar() {
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           Stealth Help Desk
         </Typography>
-        <Button as={Link} href="/logout" color="inherit">
+        <Button as={Link} href="/api/auth/logout" color="inherit">
           Logout
         </Button>
       </Toolbar>
