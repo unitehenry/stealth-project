@@ -2,6 +2,7 @@ import axios from 'axios'
 import moment from 'moment'
 import { useState, useEffect } from 'react'
 import {
+  Snackbar,
   Dialog,
   Box,
   Paper,
@@ -34,6 +35,38 @@ export default function TicketsTable() {
 
   const [ currentTicket, setCurrentTicket ] = useState(null);
 
+  const onTicketSubmit = async (evt) => {
+    evt.preventDefault();
+    if (!currentTicket) {
+      return;
+    }
+    const ticket = tickets.find(t => t.id === currentTicket?.id);
+    if (ticket.status === currentTicket.status) {
+      return;
+    }
+    await axios({
+      method: 'PUT',
+      url: `/api/tickets/${ticket.id}`,
+      data: { status: currentTicket.status },
+    });
+    const ticketsResponse = await axios({
+      method: 'GET',
+      url: '/api/tickets',
+    });
+    await setTickets(ticketsResponse.data);
+    setCurrentTicket({ ...currentTicket, submitted: true });
+    setTimeout(() => {
+        if (currentTicket.submitted) {
+          setCurrentTicket({
+            ...currentTicket,
+            submitted: false
+          });
+        }
+      },
+      6000
+    );
+  }
+
   return (
     <>
       <TableContainer
@@ -59,7 +92,7 @@ export default function TicketsTable() {
                       { tr.number }
                     </TableCell>
                     <TableCell>
-                      { tr.name }
+                      { tr.email }
                     </TableCell>
                     <TableCell>
                       { moment.utc(tr.created).format('MM/DD/yyyy') }
@@ -74,7 +107,10 @@ export default function TicketsTable() {
         </Table>
       </TableContainer>
       <Drawer anchor="right" open={currentTicket || false}>
-        <Box className="h-full bg-[#2F4858] w-full md:w-[35vw] p-4">
+        <Box
+          as="form"
+          onSubmit={onTicketSubmit}
+          className="h-full bg-[#2F4858] w-full md:w-[35vw] p-4">
           <Typography variant="h1" className="text-xl">
             Case #{currentTicket?.number}
           </Typography>
@@ -102,7 +138,7 @@ export default function TicketsTable() {
                     status: evt.target.value,
                   })
                 }}
-                value={currentTicket?.status}>
+                value={currentTicket?.status || 'new'}>
                 <MenuItem
                   className="text-gray-800"
                   value="new">
@@ -125,7 +161,7 @@ export default function TicketsTable() {
               className="w-full mb-4 text-white"
               multiline
               rows={4}
-              value="some description"
+              value={currentTicket?.description}
               required />
             <Box className="flex flex-col">
               <Button
@@ -137,8 +173,11 @@ export default function TicketsTable() {
                 className="w-full bg-white mb-2">
                 Respond to Ticket
               </Button>
-              <Button variant="contained" className="w-full bg-white mb-2">
-                Update Status
+              <Button
+                variant="contained"
+                className="w-full bg-white mb-2"
+                type="submit">
+                  Update Status
               </Button>
               <Button 
                 onClick={() => setCurrentTicket(null)}
@@ -173,6 +212,11 @@ export default function TicketsTable() {
           </Button>
         </Box>
       </Dialog>
+      <Snackbar
+         open={currentTicket?.submitted || false}
+         autoHideDuration={10000}
+         message="Status Updated!"
+       />
     </>
   )
 }

@@ -62,3 +62,18 @@ export async function getTickets() {
   await client.end();
   return response.rows || [];
 }
+
+export async function updateTicket(ticketId, ticket) {
+  const client = getPostgresClient();
+  await client.connect();
+  const response = await client.query({
+    name: 'update-ticket',
+    text: `
+      UPDATE tickets SET
+        status = $2
+      WHERE id = $1 RETURNING *`,
+    values: [ ticketId, ticket.status ],
+  });
+  await client.end();
+  return response.rows || [];
+}

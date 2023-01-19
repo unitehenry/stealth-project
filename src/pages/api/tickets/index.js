@@ -1,7 +1,7 @@
 import {
   getTickets,
-  createTicket
-} from '../../data/tickets';
+  createTicket,
+} from '../../../data/tickets';
 
 export default async function handler(req, res) {
   switch(req.method) {
@@ -11,9 +11,6 @@ export default async function handler(req, res) {
         email: req.body.email,
         description: req.body.description,
       }));
-    }
-    case 'PUT': {
-      res.status(200).json({ name: 'John Doe' });
     }
     case 'GET':
     default: {
