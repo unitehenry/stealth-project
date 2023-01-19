@@ -2,13 +2,12 @@ import Head from 'next/head'
 import Link from 'next/link'
 import {
   Box,
-  ThemeProvider,
   Typography,
   Button,
   Toolbar
 } from '@mui/material'
-import theme from '../theme'
 
+import Page from '../components/Page'
 import Navbar from '../components/Navbar'
 import TicketsTable from '../components/TicketsTable'
 
@@ -21,7 +20,7 @@ export default function Dashboard() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <ThemeProvider theme={theme}>
+      <Page>
         <Navbar />
         <Box className="p-4 m-auto max-w-6xl">
           <Box className="mt-8">
@@ -31,7 +30,7 @@ export default function Dashboard() {
             <TicketsTable />
           </Box>
         </Box>
-      </ThemeProvider>
+      </Page>
     </>
   );
 }

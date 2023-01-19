@@ -1,9 +1,10 @@
 import Head from 'next/head'
 import TicketForm from '../components/TicketForm'
-import { ThemeProvider, Box, Typography } from '@mui/material'
-import theme from '../theme'
+import { Box, Typography } from '@mui/material'
 import Image from 'next/image'
 import Link from 'next/link'
+import Page from '../components/Page'
+import { useRouter } from 'next/router';
 
 // Roboto Font
 import '@fontsource/roboto/300.css'
@@ -13,6 +14,12 @@ import '@fontsource/roboto/700.css'
 
 export default function Home() {
 
+  const router = useRouter();
+
+  const login = evt => {
+    router.push(`/api/auth/login?returnTo=${window.location.origin}/dashboard`)
+  }
+
   return (
     <>
       <Head>
@@ -21,7 +28,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <ThemeProvider theme={theme}>
+      <Page>
         <main>
           <Box className="
             h-screen w-full flex flex-col
@@ -44,13 +51,16 @@ export default function Home() {
               <TicketForm />
             </Box>
               <Box className="w-full flex justify-center items-center mt-2">
-                <Link className="text-xs text-gray-800" href="/dashboard">
+                <Link
+                  href={'#'}
+                  onClick={login}
+                  className="text-xs text-gray-800">
                   Admin Login
                 </Link>
               </Box>
           </Box>
         </main>
-      </ThemeProvider>
+      </Page>
     </>
   )
 }
