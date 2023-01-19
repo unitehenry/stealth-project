@@ -1,5 +1,9 @@
 # stealth-project
 
+```
+The coding exercise is to create a basic “help desk” / support system ticket management system.
+```
+
 ## Getting Started
 
 **Install Dependencies:**
