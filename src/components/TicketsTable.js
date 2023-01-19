@@ -173,8 +173,8 @@ export default function TicketsTable() {
                 </MenuItem>
                 <MenuItem
                   className="text-gray-800"
-                  value="closed">
-                  Closed
+                  value="resolved">
+                  Resolved
                 </MenuItem>
               </Select>
             </FormControl>
