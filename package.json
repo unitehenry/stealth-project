@@ -15,9 +15,13 @@
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.4",
     "@next/font": "13.1.2",
+    "axios": "^1.2.3",
+    "moment": "^2.29.4",
     "next": "13.1.2",
+    "pg": "^8.8.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",

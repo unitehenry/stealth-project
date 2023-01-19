@@ -1,9 +1,9 @@
 import Head from 'next/head'
 import TicketForm from '../components/TicketForm'
 import { ThemeProvider, Box, Typography } from '@mui/material'
-import theme from '../theme';
-import Image from 'next/image';
-import Link from 'next/link';
+import theme from '../theme'
+import Image from 'next/image'
+import Link from 'next/link'
 
 // Roboto Font
 import '@fontsource/roboto/300.css'
