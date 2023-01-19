@@ -7,6 +7,10 @@ The coding exercise is to create a basic “help desk” / support system ticket
 ## Screenshots
 
 ![form](.images/form.png)
+![auth](.images/auth.png)
+![dashboard](.images/dashboard.png)
+![ticket](.images/ticket.png)
+![respond](.images/respond.png)
 
 ## Getting Started
 
