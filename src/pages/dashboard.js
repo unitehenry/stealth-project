@@ -1,13 +1,15 @@
 import Head from 'next/head'
+import Link from 'next/link'
 import {
   Box,
-  AppBar,
   ThemeProvider,
   Typography,
   Button,
   Toolbar
 } from '@mui/material'
 import theme from '../theme'
+
+import Navbar from '../components/Navbar'
 import TicketsTable from '../components/TicketsTable'
 
 export default function Dashboard() {
@@ -20,16 +22,7 @@ export default function Dashboard() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ThemeProvider theme={theme}>
-        <AppBar color="secondary" position="static">
-          <Toolbar>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Admin Dashboard
-            </Typography>
-            <Button color="inherit">
-              Logout
-            </Button>
-          </Toolbar>
-        </AppBar>
+        <Navbar />
         <Box className="p-4 m-auto max-w-6xl">
           <Box className="mt-8">
             <Typography variant="h1" className="text-2xl mb-2">

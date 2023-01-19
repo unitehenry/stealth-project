@@ -31,7 +31,11 @@ export default function Home() {
               rounded px-4 rojunded shadow-lg md:max-w-lg">
               <Box className="w-full flex justify-center mb-4">
                 <Box className="bg-white rounded-full p-4 shadow-lg">
-                  <Image src="/stealth.png" width={100} height={100} />
+                  <Image
+                    src="/stealth.png"
+                    alt="logo"
+                    width={100}
+                    height={100} />
                 </Box>
               </Box>
               <Typography variant="h1" className="text-center text-xl my-4">

@@ -30,6 +30,8 @@ export default function TicketsTable() {
     }
   ]);
 
+  const [ currentTicket, setCurrentTicket ] = useState(null);
+
   return (
     <>
       <TableContainer
@@ -47,6 +49,7 @@ export default function TicketsTable() {
             { tickets.map(tr => {
               return (
                 <TableRow
+                  onClick={() => setCurrentTicket(tr)}
                   className="cursor-pointer hover:bg-[#2F4858]"
                   key={tr.id}>
                     <TableCell>
@@ -64,7 +67,7 @@ export default function TicketsTable() {
           </TableBody>
         </Table>
       </TableContainer>
-      <Drawer anchor="right" open={true}>
+      <Drawer anchor="right" open={currentTicket}>
         <Box className="h-full bg-[#2F4858] w-full md:w-[35vw] p-4">
           <Typography variant="h1" className="text-xl">
             Case #10429238
@@ -112,20 +115,28 @@ export default function TicketsTable() {
               value="some description"
               required />
             <Box className="flex flex-col">
-              <Button variant="contained" className="w-full bg-white mb-2">
+              <Button
+                onClick={() => setCurrentTicket({
+                  ...currentTicket,
+                  openResponse: true,
+                })}
+                variant="contained"
+                className="w-full bg-white mb-2">
                 Respond to Ticket
               </Button>
               <Button variant="contained" className="w-full bg-white mb-2">
                 Save
               </Button>
-              <Button className="w-full mb-2">
-                Close
+              <Button 
+                onClick={() => setCurrentTicket(null)}
+                className="w-full mb-2">
+                  Close
               </Button>
             </Box>
           </Box>
         </Box>
       </Drawer>
-      <Dialog open={true}>
+      <Dialog open={currentTicket?.openResponse}>
         <Box as="form" className="bg-[#406278] md:w-[600px] p-4">
           <Typography variant="h2" className="text-white text-xl mb-2">
             Respond to Ticket
@@ -137,10 +148,15 @@ export default function TicketsTable() {
             rows={4}
             required />
           <Button variant="contained" className="w-full bg-white mb-2">
-            Save
+            Send Message
           </Button>
-          <Button className="w-full mb-2">
-            Close
+          <Button
+            onClick={() => setCurrentTicket({
+              ...currentTicket,
+              openResponse: false,
+            })}
+            className="w-full mb-2">
+              Close
           </Button>
         </Box>
       </Dialog>
